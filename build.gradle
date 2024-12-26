@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.woori'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    //검증(DTO)
+    //입력폼으로 이동할 떄 빈 DTO전달해야만 검증된다.
+    //입력폼name만 선언, 수정폼name, value 선언===>일반
+    //검증은 입력폼, 수정폼 모두 name, value 함께 사용
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation "org.modelmapper:modelmapper:3.1.1"
+    //Swagger - API명세서를 만드는 라이브러리
+    //localhost:8080/swagger-ui/index.html
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
