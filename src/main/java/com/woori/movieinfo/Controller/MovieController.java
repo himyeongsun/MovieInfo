@@ -2,10 +2,9 @@ package com.woori.movieinfo.Controller;
 
 import com.woori.movieinfo.DTO.MovieDTO;
 import com.woori.movieinfo.Service.MovieService;
-import com.woori.movieinfo.Util.PagenationUtil;
+import com.woori.movieinfo.Util.PaginationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jdk.jfr.Description;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
@@ -27,7 +26,7 @@ import java.util.Map;
 @Tag(name="MoviController", description = "영화정보")
 public class MovieController {
     private final MovieService movieService;
-    private final PagenationUtil pagenationUtil; //페이지번호 처리 클래스
+    private final PaginationUtil paginationUtil; //페이지번호 처리 클래스
 
     @Operation(summary = "등록폼", description = "등록폼 페이지로 이동한다.")
     @GetMapping("/register")
@@ -79,7 +78,7 @@ public class MovieController {
     @GetMapping({"/", "/index","/list"})
     public String listServiceHTML(@PageableDefault(page=1) Pageable page, Model model) {
         Page<MovieDTO> movieDTOS = movieService.list(page);
-        Map<String, Integer> pageInfo = pagenationUtil.pagination(movieDTOS);
+        Map<String, Integer> pageInfo = paginationUtil.pagination(movieDTOS);
         model.addAttribute("movieDTOS", movieDTOS);
         model.addAllAttributes(pageInfo);
         return "list";
