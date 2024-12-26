@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymelea.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -25,75 +25,71 @@
             <!--영화정보 목록-->
             <!--디자인 작업후 Controller에서 전달받는 변수로 적용-->
             <!--model.addAttribute("movieDTOS", );-->
-            <!--메소드명 선언 : is~(해당값이 맞냐)-true/false
+            <!--메소드명 선언 : is~(해당값이 맞나)-true/false
                 set~(값을 받아서 변수에 저장), get~(변수에서 값을 읽어온다.)-->
             <th:block th:if="${#lists.isEmpty(movieDTOS)}"><!--받아온 값이 없으면-->
                 <div>
                     <p>등록된 영화가 없습니다.</p>
                 </div>
-            </th:block>
-            <th:block th:if="${movieDTOS != null}">
-                <p>ㅁㅇㄹㄴㅇㄹㄴㅇ</p>
-            </th:block>
+            </th:block><!--th구문쓸때 조건식은 같은것으로... 맞았을때냐 틀렸을때냐로 사용-->
             <th:block th:unless="${#lists.isEmpty(movieDTOS)}"><!--값이 없으면이 아니면(있으면)-->
                 <table class="table">
                     <tbody>
                     <tr th:each="data:${movieDTOS}"><!--목록이 반복출력-->
                         <!--그림 크기 150px, 200px, 250px, 300px-->
-                        <td style="width:20%"> <!--포스터 존재하는 경우, 존재하지 않는 경우-->
+                        <td style="width: 20%">
                             <th:block th:if="${data.poster} == null"><!--그림파일이 없으면 출력-->
                                 <img src="images/no_image.jpg" width="200px" height="150px">
                             </th:block>
                             <th:block th:unless="${data.poster} == null"><!--그림파일이 존재하면-->
-                                <img th:src="@{/upload/}+${data.poster}" width="150px" height="200px">
+                                <img th:src="@{/upload/}+${data.poster}" width="200px" height="150px">
                             </th:block>
-                        </td> <!--영화포스터-->
-                        <td style="width:80%">
-                            <H3><a th:href="@{/read(code=${data.code})}" th:text="${data.name}">범죄도시</a></H3>
+                        </td><!--영화포스터-->
+                        <td style="width: 80%">
+                            <h3>
+                                <a th:href="@{/read(code=${data.code})}" th:text="${data.name}">범죄도시</a>
+                            </h3>
                             <p>주연 : <span th:text="${data.actor}">마동석</span></p>
                             <p>감독 : <span th:text="${data.director}">마동석</span></p>
                             <span class="badge rounded-pill bg-primary" th:text="${data.genre}">액션</span>
                             <span class="badge rounded-pill bg-secondary" th:text="${data.nation}">한국</span>
-                            <p>개봉일 : <span th:text="${data.opendate}">2024-12-5</span></p>
-                        </td> <!--영화 정보-->
+                            <p>개봉일 : <span th:text="${data.opendate}">2024-12-05</span></p>
+                        </td><!--영화 정보-->
                     </tr>
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
                     <ul class="pagination">
-                        <li class="page-item" th:unless="${startPage==1}"> <!--시작페이지번호가 1이 아니면 출력-->
+                        <li class="page-item" th:unless="${startPage==1}"><!--시작페이지번호가 1이 아니면 출력-->
                             <a class="page-link" th:href="@{/list(page=1)}">시작</a>
                         </li>
                         <li class="page-item" th:unless="${currentPage==1}"><!--현재페이지번호가 1페이지가 아니면 출력-->
                             <a class="page-link" th:href="@{/list(page=${prevPage})}">이전</a>
                         </li>
-                        <th:block th:each="num:${#numbers.sequence(startPage, endPage, 1)}"><!--span-->
+                        <th:block th:each="num:${#numbers.sequence(startPage, endPage, 1)}"><!--span으로 해도 상관없음-->
                             <!--현재 위치가 아닌 페이지번호-->
                             <li class="page-item" th:unless="${num==currentPage}">
-                                <a class="page-link" th:href="@{/list(page=${num})}" th:text=${num}>1</a>
+                                <a class="page-link" th:href="@{/list(page=${num})}" th:text="${num}">1</a>
                             </li>
                             <!--현재 위치의 페이지번호는 활성화-->
                             <li class="page-item active" th:if="${num==currentPage}">
-                                <a class="page-link" th:href="@{/list(page=${num})}" th:text="${num}">2</a> <!--직접출력 [[${num}]] -->
+                                <a class="page-link" th:href="@{/list(page=${num})}" th:text="${num}">2</a><!--직접출력[[${num}]]-->
                             </li>
                         </th:block>
-                        <li class="page-item" th:unless="${currentPage>=lastpage}"><!--현재페이지번호가 마지막과 같지 않으면-->
-                            <a class="page-link" th:href="@{/list(page=${nextpage})}">다음</a>
+                        <li class="page-item" th:unless="${currentPage>=lastPage}"><!--현재페이지번호가 마지막과 같지 않으면-->
+                            <a class="page-link" th:href="@{/list(page=${nextPage})}">다음</a>
                         </li>
                         <li class="page-item" th:unless="${endPage==lastPage}"><!--끝페이지번호가 마지막페이지번호와 같지 않으면-->
-                            <a class="page-link" th:href="@{/list(page=${lastpage})}">끝</a>
+                            <a class="page-link" th:href="@{/list(page=${lastPage})}">끝</a>
                         </li>
                     </ul>
                 </div>
             </th:block>
-
+        </div>
+        <div class="col-1">
 
         </div>
-
-        <div class="col-1"></div>
-
     </div>
 </div>
-
 </body>
 </html>
