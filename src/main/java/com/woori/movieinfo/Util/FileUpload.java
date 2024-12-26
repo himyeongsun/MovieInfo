@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.UUID;
 
-//파일업드에 관련된 메소드를 담은 클래스
+//파일업로드에 관련된 메소드를 담은 클래스
 //poster.jpg==>poster.jpg 저장, poster.jpg새로 저장==>poster.jpg 기존내용되고 새로운파일 저장
 //poster.jpg==>32423sd324dsrw3d.jpg 중복되지 않는 이름으로 파일 저장
 //UUID : 파일이름을 난수로 생성
